@@ -5,85 +5,85 @@ using namespace std;
 PolyNode* CreatePoly(char* expr) {
     PolyNode* head = nullptr;
     PolyNode* tail = nullptr;
-    bool isnegative = false; // Katsayının negatif olup olmadığını kontrol eden boolean
-    double coef = 0; // Polinom teriminin katsayısının tutulduğu değişken
-    int expo = 0; // Polinom teriminin üstel kısmının tutulduğu değişken
+    bool isnegative = false; // KatsayÄ±nÄ±n negatif olup olmadÄ±ÄŸÄ±nÄ± kontrol eden boolean
+    double coef = 0; // Polinom teriminin katsayÄ±sÄ±nÄ±n tutulduÄŸu deÄŸiÅŸken
+    int expo = 0; // Polinom teriminin Ã¼stel kÄ±smÄ±nÄ±n tutulduÄŸu deÄŸiÅŸken
 
-    for (int i = 0; expr[i] != '\0';) { // Girdinin son karakteri olmadığı sürece döngüyü devam ettir
+    for (int i = 0; expr[i] != '\0';) { // Girdinin son karakteri olmadÄ±ÄŸÄ± sÃ¼rece dÃ¶ngÃ¼yÃ¼ devam ettir
 
-        while (expr[i] == ' ') i++; // Boşluk varsa, boşluklar bitene kadar geç
+        while (expr[i] == ' ') i++; // BoÅŸluk varsa, boÅŸluklar bitene kadar geÃ§
 
-        if (expr[i] == '-') { // Negatif işareti görünce negatif boolean'ı true yap ve bir ilerle
+        if (expr[i] == '-') { // Negatif iÅŸareti gÃ¶rÃ¼nce negatif boolean'Ä± true yap ve bir ilerle
             isnegative = true;
             i++;
         }
-        else { // Negatif işareti yoksa pozitif sayılır ve devam eder
+        else { // Negatif iÅŸareti yoksa pozitif sayÄ±lÄ±r ve devam eder
             isnegative = false;
-            if (expr[i] == '+') i++; // Eğer + işareti varsa, onu atla
+            if (expr[i] == '+') i++; // EÄŸer + iÅŸareti varsa, onu atla
         }
 
-        while (expr[i] == ' ') i++; // Potansiyel boşluk varsa, boşluklar bitene kadar geç
+        while (expr[i] == ' ') i++; // Potansiyel boÅŸluk varsa, boÅŸluklar bitene kadar geÃ§
 
-        coef = 0; // Katsayıyı sıfırla
-        bool isdouble = false; // Ondalık bir sayı ise, bu değer . karakterine gelince true olacak
-        double decimalPlace = 0.1; // Ondalık yerleri yönetmek için değişken
-        while ((expr[i] >= '0' && expr[i] <= '9') || expr[i] == '.') { // 0 ile 9 veya . karakterini görünceye kadar devam et
-            if (expr[i] >= '0' && expr[i] <= '9') { // Nokta görünceye kadar tam sayı kısmını hesaplar
+        coef = 0; // KatsayÄ±yÄ± sÄ±fÄ±rla
+        bool isdouble = false; // OndalÄ±k bir sayÄ± ise, bu deÄŸer . karakterine gelince true olacak
+        double decimalPlace = 0.1; // OndalÄ±k yerleri yÃ¶netmek iÃ§in deÄŸiÅŸken
+        while ((expr[i] >= '0' && expr[i] <= '9') || expr[i] == '.') { // 0 ile 9 veya . karakterini gÃ¶rÃ¼nceye kadar devam et
+            if (expr[i] >= '0' && expr[i] <= '9') { // Nokta gÃ¶rÃ¼nceye kadar tam sayÄ± kÄ±smÄ±nÄ± hesaplar
                 if (isdouble) {
                     coef += (expr[i] - '0') * decimalPlace;
-                    decimalPlace /= 10; // Ondalık kısmın bir sonraki basamakta kaymasını ayarlar
+                    decimalPlace /= 10; // OndalÄ±k kÄ±smÄ±n bir sonraki basamakta kaymasÄ±nÄ± ayarlar
                 }
                 else {
-                    coef = coef * 10 + (expr[i] - '0'); // Tam sayı kısmını hesaplar
+                    coef = coef * 10 + (expr[i] - '0'); // Tam sayÄ± kÄ±smÄ±nÄ± hesaplar
                 }
             }
-            else if (expr[i] == '.') { // . karakterini görünce float olduğunu anlar ve isdouble'ı true yapar
+            else if (expr[i] == '.') { // . karakterini gÃ¶rÃ¼nce float olduÄŸunu anlar ve isdouble'Ä± true yapar
                 isdouble = true;
             }
-            i++; // bir sonraki karakteri kontrol etmek için ilerler
+            i++; // bir sonraki karakteri kontrol etmek iÃ§in ilerler
         }
-        if (coef == 0) coef = 1; // Yukarıdaki döngüde katsayı yoksa, 0 döner. Ancak katsayı 1 olmalı, bu yüzden düzeltir
-        if (isnegative) coef = -coef; // Negatif bayrağı true ise katsayıyı -1 ile çarpar
+        if (coef == 0) coef = 1; // YukarÄ±daki dÃ¶ngÃ¼de katsayÄ± yoksa, 0 dÃ¶ner. Ancak katsayÄ± 1 olmalÄ±, bu yÃ¼zden dÃ¼zeltir
+        if (isnegative) coef = -coef; // Negatif bayraÄŸÄ± true ise katsayÄ±yÄ± -1 ile Ã§arpar
 
-        while (expr[i] == ' ') i++; // Potansiyel boşlukları geçmek için
+        while (expr[i] == ' ') i++; // Potansiyel boÅŸluklarÄ± geÃ§mek iÃ§in
 
-        expo = 0; // Üstel ifadenin değerini sıfırlar
+        expo = 0; // Ãœstel ifadenin deÄŸerini sÄ±fÄ±rlar
         if (expr[i] == 'x') {
-            i++; // x karakterini görünce i değerini 1 arttırır
-            if (expr[i] == '^') { // x'in ardından ^ karakterini görünce bir ilerle
+            i++; // x karakterini gÃ¶rÃ¼nce i deÄŸerini 1 arttÄ±rÄ±r
+            if (expr[i] == '^') { // x'in ardÄ±ndan ^ karakterini gÃ¶rÃ¼nce bir ilerle
                 i++;
-                while (expr[i] >= '0' && expr[i] <= '9') { // Eğer ^ karakterinden sonraki karakter 0 ile 9 arasındaysa döngüye girer ve üssü hesaplar
+                while (expr[i] >= '0' && expr[i] <= '9') { // EÄŸer ^ karakterinden sonraki karakter 0 ile 9 arasÄ±ndaysa dÃ¶ngÃ¼ye girer ve Ã¼ssÃ¼ hesaplar
                     expo = expo * 10 + (expr[i] - '0');
                     i++;
                 }
             }
-            else { // Eğer ^ sonrası bir sayı yoksa otomatik olarak 1 olarak hesaplar
+            else { // EÄŸer ^ sonrasÄ± bir sayÄ± yoksa otomatik olarak 1 olarak hesaplar
                 expo = 1;
             }
         }
 
-        while (expr[i] == ' ') i++; // Potansiyel boşlukları geçer ve bir sonraki terim için döngünün daha sağlıklı çalışmasını sağlar
+        while (expr[i] == ' ') i++; // Potansiyel boÅŸluklarÄ± geÃ§er ve bir sonraki terim iÃ§in dÃ¶ngÃ¼nÃ¼n daha saÄŸlÄ±klÄ± Ã§alÄ±ÅŸmasÄ±nÄ± saÄŸlar
 
-        // Bulunan coef ve expo değerlerini, bu değerleri tutacak bağlantılı liste düğümlerine atar ve oluşturur
+        // Bulunan coef ve expo deÄŸerlerini, bu deÄŸerleri tutacak baÄŸlantÄ±lÄ± liste dÃ¼ÄŸÃ¼mlerine atar ve oluÅŸturur
         PolyNode* newPolyNode = new PolyNode;
-        newPolyNode->coef = coef; // Katsayıyı ayarla
-        newPolyNode->exp = expo;  // Üssü ayarla
-        newPolyNode->next = nullptr; // Sonraki işaretçiyi null olarak başlat
+        newPolyNode->coef = coef; // KatsayÄ±yÄ± ayarla
+        newPolyNode->exp = expo;  // ÃœssÃ¼ ayarla
+        newPolyNode->next = nullptr; // Sonraki iÅŸaretÃ§iyi null olarak baÅŸlat
         if (head == nullptr) {
-            head = tail = newPolyNode; // Eğer liste boşsa, baş ve son olarak yeni düğümü ayarla
+            head = tail = newPolyNode; // EÄŸer liste boÅŸsa, baÅŸ ve son olarak yeni dÃ¼ÄŸÃ¼mÃ¼ ayarla
         }
         else {
-            tail->next = newPolyNode; // Yeni düğümü listenin sonuna ekle
-            tail = newPolyNode; // Son işaretçiyi güncelle
+            tail->next = newPolyNode; // Yeni dÃ¼ÄŸÃ¼mÃ¼ listenin sonuna ekle
+            tail = newPolyNode; // Son iÅŸaretÃ§iyi gÃ¼ncelle
         }
     }
 
-    return head; // Oluşturulan polinom bağlantılı listesinin başını döndür
+    return head; // OluÅŸturulan polinom baÄŸlantÄ±lÄ± listesinin baÅŸÄ±nÄ± dÃ¶ndÃ¼r
 }
 
 
 void DeletePoly(PolyNode* poly) {
-    // Polinomun düğümlerini tek tek dolaşırak bellekten silindi.
+    // Polinomun dÃ¼ÄŸÃ¼mlerini tek tek dolaÅŸÄ±rak bellekten silindi.
     while (poly != nullptr) {
         PolyNode* temp = poly;
         poly = poly->next;
@@ -103,13 +103,13 @@ PolyNode* AddNode(PolyNode* head, double coef, int exp) {
     newNode->exp = exp;
     newNode->next = nullptr;
 
-    // Liste boşsa veya yeni düğümün daha büyük bir üssü varsa başa eklendi.
+    // Liste boÅŸsa veya yeni dÃ¼ÄŸÃ¼mÃ¼n daha bÃ¼yÃ¼k bir Ã¼ssÃ¼ varsa baÅŸa eklendi.
     if (head == nullptr || head->exp < exp) {
         newNode->next = head;
         return newNode;
     }
 
-    // Aynı üsse sahip bir düğüm varsa katsayı güncellendi.
+    // AynÄ± Ã¼sse sahip bir dÃ¼ÄŸÃ¼m varsa katsayÄ± gÃ¼ncellendi.
     PolyNode* current = head, * prev = nullptr;
     while (current != nullptr && current->exp > exp) {
         prev = current;
@@ -118,7 +118,7 @@ PolyNode* AddNode(PolyNode* head, double coef, int exp) {
 
     if (current != nullptr && current->exp == exp) {
         current->coef += coef;
-        if (current->coef == 0) { // Eğer katsayı sıfır olursa düğüm silindi
+        if (current->coef == 0) { // EÄŸer katsayÄ± sÄ±fÄ±r olursa dÃ¼ÄŸÃ¼m silindi
             if (prev == nullptr) {
                 head = current->next;
             }
@@ -131,7 +131,7 @@ PolyNode* AddNode(PolyNode* head, double coef, int exp) {
         return head;
     }
 
-    // Yeni düğüm uygun yere eklendi.
+    // Yeni dÃ¼ÄŸÃ¼m uygun yere eklendi.
     newNode->next = current;
     if (prev == nullptr) {
         return newNode;
@@ -147,15 +147,15 @@ PolyNode* AddNode(PolyNode* head, double coef, int exp) {
 PolyNode* Add(PolyNode* poly1, PolyNode* poly2) {
     PolyNode* poly3 = nullptr;
 
-    // poly2'nin her terimi için poly1'i dolaşarak işle
+    // poly2'nin her terimi iÃ§in poly1'i dolaÅŸarak iÅŸle
     for (PolyNode* p2 = poly2; p2 != nullptr; p2 = p2->next) {
         PolyNode* temp = poly1;
         bool found = false;
 
-        // poly1 içinde poly2'nin üsse sahip terimini bul
+        // poly1 iÃ§inde poly2'nin Ã¼sse sahip terimini bul
         while (temp != nullptr) {
             if (p2->exp == temp->exp) {
-                // Aynı üsse sahip terim bulundu, katsayıları topla
+                // AynÄ± Ã¼sse sahip terim bulundu, katsayÄ±larÄ± topla
                 double newCoef = temp->coef + p2->coef;
                 poly3 = AddNode(poly3, newCoef, temp->exp);  // Yeni terimi poly3'e ekle
                 found = true;
@@ -164,7 +164,7 @@ PolyNode* Add(PolyNode* poly1, PolyNode* poly2) {
             temp = temp->next;
         }
 
-        // Eğer poly1 içinde aynı üsse sahip terim yoksa, poly2'nin terimini ekle
+        // EÄŸer poly1 iÃ§inde aynÄ± Ã¼sse sahip terim yoksa, poly2'nin terimini ekle
         if (!found) {
             poly3 = AddNode(poly3, p2->coef, p2->exp);
         }
@@ -174,7 +174,7 @@ PolyNode* Add(PolyNode* poly1, PolyNode* poly2) {
     for (PolyNode* p1 = poly1; p1 != nullptr; p1 = p1->next) {
         bool found = false;
 
-        // poly3 içinde bu üsse sahip bir terim olup olmadığını kontrol et
+        // poly3 iÃ§inde bu Ã¼sse sahip bir terim olup olmadÄ±ÄŸÄ±nÄ± kontrol et
         for (PolyNode* p3 = poly3; p3 != nullptr; p3 = p3->next) {
             if (p1->exp == p3->exp) {
                 found = true;
@@ -182,7 +182,7 @@ PolyNode* Add(PolyNode* poly1, PolyNode* poly2) {
             }
         }
 
-        // Eğer poly3 içinde aynı üsse sahip terim yoksa poly1'in terimini ekle
+        // EÄŸer poly3 iÃ§inde aynÄ± Ã¼sse sahip terim yoksa poly1'in terimini ekle
         if (!found) {
             poly3 = AddNode(poly3, p1->coef, p1->exp);
         }
@@ -194,15 +194,15 @@ PolyNode* Add(PolyNode* poly1, PolyNode* poly2) {
 PolyNode* Subtract(PolyNode* poly1, PolyNode* poly2) {
     PolyNode* poly3 = nullptr;
 
-    // poly2'nin her terimi için poly1'i dolaşarak işle
+    // poly2'nin her terimi iÃ§in poly1'i dolaÅŸarak iÅŸle
     for (PolyNode* p2 = poly2; p2 != nullptr; p2 = p2->next) {
         PolyNode* temp = poly1;
         bool found = false;
 
-        // poly1 içinde poly2'nin üsse sahip terimini bul
+        // poly1 iÃ§inde poly2'nin Ã¼sse sahip terimini bul
         while (temp != nullptr) {
             if (p2->exp == temp->exp) {
-                // Aynı üsse sahip terim bulundu, katsayıları çıkar
+                // AynÄ± Ã¼sse sahip terim bulundu, katsayÄ±larÄ± Ã§Ä±kar
                 double newCoef = temp->coef - p2->coef;
                 poly3 = AddNode(poly3, newCoef, temp->exp);
                 found = true;
@@ -211,17 +211,17 @@ PolyNode* Subtract(PolyNode* poly1, PolyNode* poly2) {
             temp = temp->next;
         }
 
-        // Eğer poly1 içinde aynı üsse sahip terim yoksa, poly2'nin terimini - ile ekle
+        // EÄŸer poly1 iÃ§inde aynÄ± Ã¼sse sahip terim yoksa, poly2'nin terimini - ile ekle
         if (!found) {
             poly3 = AddNode(poly3, -p2->coef, p2->exp);
         }
     }
 
-    // Geriye kalan poly1'deki terimleri poly3'e ekle (çünkü poly2 ile karşılaştırılmamışlar)
+    // Geriye kalan poly1'deki terimleri poly3'e ekle (Ã§Ã¼nkÃ¼ poly2 ile karÅŸÄ±laÅŸtÄ±rÄ±lmamÄ±ÅŸlar)
     for (PolyNode* p1 = poly1; p1 != nullptr; p1 = p1->next) {
         bool found = false;
 
-        // poly3 içinde bu üsse sahip bir terim olup olmadığını kontrol et
+        // poly3 iÃ§inde bu Ã¼sse sahip bir terim olup olmadÄ±ÄŸÄ±nÄ± kontrol et
         for (PolyNode* p3 = poly3; p3 != nullptr; p3 = p3->next) {
             if (p1->exp == p3->exp) {
                 found = true;
@@ -229,7 +229,7 @@ PolyNode* Subtract(PolyNode* poly1, PolyNode* poly2) {
             }
         }
 
-        // Eğer poly3 içinde aynı üsse sahip terim yoksa poly1'in terimini ekle
+        // EÄŸer poly3 iÃ§inde aynÄ± Ã¼sse sahip terim yoksa poly1'in terimini ekle
         if (!found) {
             poly3 = AddNode(poly3, p1->coef, p1->exp);
         }
@@ -246,17 +246,17 @@ PolyNode* Multiply(PolyNode* poly1, PolyNode* poly2) {
         PolyNode* tempPoly = nullptr;
         PolyNode* temp = poly1;
 
-        // poly1'in her terimi ile p2'nin terimini çarp
+        // poly1'in her terimi ile p2'nin terimini Ã§arp
         while (temp != nullptr) {
             int newExp = temp->exp + p2->exp;
             double newCoef = temp->coef * p2->coef;
 
-            // Geçici polinoma yeni terimi ekle
+            // GeÃ§ici polinoma yeni terimi ekle
             tempPoly = AddNode(tempPoly, newCoef, newExp);
             temp = temp->next; // temp'i ilerlet
         }
 
-        // tempPoly'yi sonuç polinomuna ekle
+        // tempPoly'yi sonuÃ§ polinomuna ekle
         poly3 = Add(poly3, tempPoly);
 
 
@@ -267,92 +267,92 @@ PolyNode* Multiply(PolyNode* poly1, PolyNode* poly2) {
 }
 
 
-double Evaluate(PolyNode* poly, double x) { //belirli bir değer için polinomun değerini hesaplayan fonksiyon.
+double Evaluate(PolyNode* poly, double x) { //belirli bir deÄŸer iÃ§in polinomun deÄŸerini hesaplayan fonksiyon.
     double result = 0.0;
     PolyNode* curr = poly;
 
-    while (curr != nullptr) { //polinomun tüm düğümleri işlenir.
+    while (curr != nullptr) { //polinomun tÃ¼m dÃ¼ÄŸÃ¼mleri iÅŸlenir.
         result += curr->coef * pow(x, curr->exp);
-        curr = curr->next; // döngünün bir sonraki iterasyonunda bir sonraki terim işlenir.
+        curr = curr->next; // dÃ¶ngÃ¼nÃ¼n bir sonraki iterasyonunda bir sonraki terim iÅŸlenir.
     }
 
     return result;
 }
 
 PolyNode* Derivative(PolyNode* poly) {
-    PolyNode* curr = poly; // Mevcut polinomun başını işaret eden pointer
-    PolyNode* derivedPoly = NULL; // Türevi tutacak polinomun başı
+    PolyNode* curr = poly; // Mevcut polinomun baÅŸÄ±nÄ± iÅŸaret eden pointer
+    PolyNode* derivedPoly = NULL; // TÃ¼revi tutacak polinomun baÅŸÄ±
 
-    // Mevcut polinomun her terimi için döngü
+    // Mevcut polinomun her terimi iÃ§in dÃ¶ngÃ¼
     while (curr != NULL) {
-        if (curr->exp != 0) { // Eğer üstel kısım sıfırdan farklıysa
-            PolyNode* newPolyNode = new PolyNode; // Yeni bir polinom düğümü oluştur
-            newPolyNode->coef = curr->coef * curr->exp; // Yeni katsayı, mevcut katsayı * mevcut üs olarak hesapla
-            newPolyNode->exp = curr->exp - 1; // Yeni üssü, mevcut üsten 1 çıkararak hesapla
-            newPolyNode->next = NULL; // Sonraki işaretçiyi null olarak ayarla
+        if (curr->exp != 0) { // EÄŸer Ã¼stel kÄ±sÄ±m sÄ±fÄ±rdan farklÄ±ysa
+            PolyNode* newPolyNode = new PolyNode; // Yeni bir polinom dÃ¼ÄŸÃ¼mÃ¼ oluÅŸtur
+            newPolyNode->coef = curr->coef * curr->exp; // Yeni katsayÄ±, mevcut katsayÄ± * mevcut Ã¼s olarak hesapla
+            newPolyNode->exp = curr->exp - 1; // Yeni Ã¼ssÃ¼, mevcut Ã¼sten 1 Ã§Ä±kararak hesapla
+            newPolyNode->next = NULL; // Sonraki iÅŸaretÃ§iyi null olarak ayarla
 
-            // Eğer türev polinom yoksa, onu baş olarak ayarla
+            // EÄŸer tÃ¼rev polinom yoksa, onu baÅŸ olarak ayarla
             if (derivedPoly == NULL) {
-                derivedPoly = newPolyNode; // Türevi başa atar
+                derivedPoly = newPolyNode; // TÃ¼revi baÅŸa atar
             }
             else {
-                // Türev polinomun sonuna yeni düğümü ekle
-                PolyNode* temp = derivedPoly; // Türev polinomunu geçici gösterici ile başla
-                while (temp->next != NULL) { // Son düğümü bulana kadar ilerle
+                // TÃ¼rev polinomun sonuna yeni dÃ¼ÄŸÃ¼mÃ¼ ekle
+                PolyNode* temp = derivedPoly; // TÃ¼rev polinomunu geÃ§ici gÃ¶sterici ile baÅŸla
+                while (temp->next != NULL) { // Son dÃ¼ÄŸÃ¼mÃ¼ bulana kadar ilerle
                     temp = temp->next;
                 }
-                temp->next = newPolyNode; // Yeni düğümü sona ekle
+                temp->next = newPolyNode; // Yeni dÃ¼ÄŸÃ¼mÃ¼ sona ekle
             }
         }
-        curr = curr->next; // Mevcut polinomun bir sonraki terimine geç
+        curr = curr->next; // Mevcut polinomun bir sonraki terimine geÃ§
     }
 
-    return derivedPoly; // Hesaplanan türev polinomunu döndür
+    return derivedPoly; // Hesaplanan tÃ¼rev polinomunu dÃ¶ndÃ¼r
 }
 
 
 
 
 void Plot(PolyNode* poly, int x1, int x2) {
-    const int SCREEN_HEIGHT = 30; // ekranın yüksekliği (satır sayısı)
-    const int SCREEN_WIDTH = 80;  // ekranın genişliği (sabit sütun sayısı)
-    const int X_CENTER = SCREEN_WIDTH / 2; //orta değerler
+    const int SCREEN_HEIGHT = 30; // ekranÄ±n yÃ¼ksekliÄŸi (satÄ±r sayÄ±sÄ±)
+    const int SCREEN_WIDTH = 80;  // ekranÄ±n geniÅŸliÄŸi (sabit sÃ¼tun sayÄ±sÄ±)
+    const int X_CENTER = SCREEN_WIDTH / 2; //orta deÄŸerler
     const int Y_CENTER = SCREEN_HEIGHT / 2;
 
 
     char screen[SCREEN_HEIGHT][SCREEN_WIDTH]; //2D karakter dizisi
     for (int i = 0; i < SCREEN_HEIGHT; i++) {
         for (int j = 0; j < SCREEN_WIDTH; j++) {
-            screen[i][j] = ' '; // ekranı boş karakterlerle doldurur.
+            screen[i][j] = ' '; // ekranÄ± boÅŸ karakterlerle doldurur.
         }
     }
 
-    // X eksenini çizer.
+    // X eksenini Ã§izer.
     for (int i = 0; i < SCREEN_HEIGHT; i++) {
         screen[i][X_CENTER] = '|';
     }
-    // Y eksenini çizer
+    // Y eksenini Ã§izer
     for (int j = 0; j < SCREEN_WIDTH; j++) {
         screen[Y_CENTER][j] = '-';
     }
-    screen[Y_CENTER][X_CENTER] = '+'; //X ve Y eksenlerinin kesişimlerine ekler.
+    screen[Y_CENTER][X_CENTER] = '+'; //X ve Y eksenlerinin kesiÅŸimlerine ekler.
 
-    // polinomun x değeri için y'yi hesaplayıp ekrana çizer.
+    // polinomun x deÄŸeri iÃ§in y'yi hesaplayÄ±p ekrana Ã§izer.
     for (int x = x1; x <= x2; x++) {
-        double y = Evaluate(poly, x); //Evaluate fonksiyonu ile o noktadaki değer hesaplanır.
+        double y = Evaluate(poly, x); //Evaluate fonksiyonu ile o noktadaki deÄŸer hesaplanÄ±r.
         int screenX = X_CENTER + x;   // X konumu
         int screenY = Y_CENTER - (int)(y + 0.5); // Y konumu
 
-        // eğer y ekran sınırları içindeyse çizer.
+        // eÄŸer y ekran sÄ±nÄ±rlarÄ± iÃ§indeyse Ã§izer.
         if (screenY >= 0 && screenY < SCREEN_HEIGHT && screenX >= 0 && screenX < SCREEN_WIDTH) {
             screen[screenY][screenX] = '*';
         }
     }
 
-    // ekranı yazdırır.
+    // ekranÄ± yazdÄ±rÄ±r.
     for (int i = 0; i < SCREEN_HEIGHT; i++) {
         for (int j = 0; j < SCREEN_WIDTH; j++) {
-            cout << screen[i][j]; // her satırı ekrana yazdırır
+            cout << screen[i][j]; // her satÄ±rÄ± ekrana yazdÄ±rÄ±r
         }
         cout << endl;
     }
