@@ -1,27 +1,27 @@
-# 📐 Polinom İşlemleyici (C++)
+# 📐 Polynomial Processor (C++)
 
-Bu proje, C++ dilinde bağlantılı liste (linked list) veri yapısını kullanarak polinom işlemleri yapan bir uygulamadır. Proje ödev kapsamında geliştirilmiştir.
+This project is a C++ application that performs polynomial operations using the **singly linked list** data structure. It was developed as part of a coursework assignment.
 
-## 🧱 Kullanılan Veri Yapısı
+## 🧱 Data Structure Used
 
-Polinomlar, her terimi (katsayı ve üs) içeren düğümlerden oluşan **tek yönlü bağlı liste** (linked list) ile temsil edilmiştir. Bu yapı sayesinde polinomlar dinamik olarak oluşturulabilir, işlenebilir ve güncellenebilir.
+Polynomials are represented using a **singly linked list**, where each node contains a coefficient and an exponent. This structure allows for dynamic creation, manipulation, and evaluation of polynomials.
 
-## ✨ Özellikler
+## ✨ Features
 
-- Polinom oluşturma (string ifadeden)
-- Polinomları toplama, çıkarma ve çarpma
-- Belirli bir `x` değeri için değerlendirme
-- Türev alma
-- ASCII karakterlerle terminalde grafik çizimi
+- Polynomial creation (from string expressions)
+- Addition, subtraction, and multiplication of polynomials
+- Evaluation of a polynomial at a specific `x` value
+- Derivative calculation
+- ASCII-based graphical plotting in the terminal
 
-## 🗃️ Dosyalar
+## 🗃️ Files
 
-- `PolyNode.h` – Polinom düğüm tanımı (coef, exp, next)
-- `Poly.h` – Fonksiyon prototipleri
-- `poly.cpp` – Tüm işlevlerin implementasyonu
-- `main.cpp` – Test fonksiyonları ve çıktılar
+- `PolyNode.h` – Definition of the polynomial node (coef, exp, next)
+- `Poly.h` – Function prototypes
+- `poly.cpp` – Implementation of all polynomial operations
+- `main.cpp` – Test functions and sample outputs
 
-Program çalıştığında, sırasıyla 8 test otomatik olarak yürütülür.
+When the program runs, 8 test cases are executed automatically in sequence.
 
-### 📌 Not
-Bu proje, veri yapıları dersi kapsamında ödev olarak hazırlanmıştır. Linked list kullanımı özellikle istenmiştir.
+### 📌 Note
+This project was developed as a homework assignment for a data structures course. The use of linked lists was specifically required.
